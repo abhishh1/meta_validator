@@ -1,6 +1,6 @@
 name: meta_validator
 description: A tidy utility to handle validation of strings like a pro. It provides support for both iOS, Android, Web, Linux platforms (offcourse).
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/abhishh1/meta_validator
 
 environment:
