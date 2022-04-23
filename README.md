@@ -1,150 +1,51 @@
-# ⚡Cache Manager
+# ⚡Meta validator
 
-A tidy utility to handle cache of your flutter app like a Boss. It provides support for both iOS and Android platforms (offcourse).
+A tidy utility to handle validation of strings like a pro. It provides support for both iOS, Android, Web, Linux platforms (offcourse).
 
 ## 🎖Installing
 
 ```yaml
 dependencies:
-  cache_manager: ^<latest_version>
+  meta_validator: ^<latest_version>
 ```
 
 ## ⚽Awesome Features
 
-### 🍧Cache Utilities
-🌟```CacheManagerUtils.conditionalCache({key, valueType, actionIfNull, actionIfNotNull})```
+🔥```StrengthChecker.getPasswordStrength("some password")```
 
-- Conditional builder based on the value of cache. `actionIfNull` & `actionIfNotNull` are dynamic arguments used for Navigation through views, Rendering UI, Debugging values etc. The `valueType` refers to the datatype of cache (`StringValue`, `BoolValue`, `IntValue`, `DoubleValue`) 
+- Check the strength of your password ranging between 0.0 to 1.0
 
-🌟```CacheManagerUtils.cacheTextBuilder(textStyle, cacheKey})```
+🔥```StrengthChecker.getPasswordValidations(
+        password: "aaa",
+        defaultTitle: "DEFAULT",
+        mediumTitle: "MEDIUM",
+        strongTitle: "STRONG",
+        weakTitle: "WEAK");```
 
-- TextBuilder for the cached value. `cacheKey` is the key used to address the cache. The builder will return 'Invalid cache' if no cache is missing. Use `textStyle` to style the value of the cache.
+- Get a customized string for password strength. Add you custom messages for each password validation with a default statement.
 
+🔥```StringValidator.validateEmail("fake email")```
 
-### 👀Read cache
+- Check if your email address is valid or not.
 
-🌟```ReadCache.getJson(key)``` : Get JSON stored as cache.
+🔥```StringValidator.validatePostalCode("fake postal code")```
 
-🌟```ReadCache.getString(key)``` : Get string stored as cache.
+- Check if your postal code is valid or not.
 
-🌟```ReadCache.getBool(key)``` : Get boolean stored as cache.
+🔥```StringValidator.validateBlacklisted(["apple", "ball"], "ball")```
 
-🌟```ReadCache.getInt(key)``` : Get integer stored as cache.
-
-🌟```ReadCache.getDouble(key)``` : Get double stored as cache.
-
-
-### 🖊Write cache
-
-🌟```WriteCache.setJson(key,value)``` : Set JSON as cache.
-
-🌟```WriteCache.setString(key,value)``` : Set a string as cache.
-
-🌟```WriteCache.setInt(key,value)``` : Set an integer as cache.
-
-🌟```WriteCache.setBool(key,value)``` : Set a boolean as cache.
-
-🌟```WriteCache.setDouble(key,value)``` : Set a double as cache.
-
-🌟```WriteCache.setListString(key,value)``` : Set a List of string as cache.
+- Check if the inserted word is blacklisted or not.
 
 
-### ❌Delete cache
-🌟```DeleteCache.deleteKey(key,[takeAction])``` : Delete the cache and perform an action when cache is deleted(Optional).
+😎 + 10 more string validators!
 
 
-### Example : Login flow with caching userID
+-----------------------------------------------------------------------------
 
-```dart
-
-//Attached function in a login view
-Future<String?> login({
-    required BuildContext context,
-    required String email,
-    required String password,
-  }) async {
-    try {
-      var userId = await _authenticationService.login(
-          context: context, email: email, password: password);
-      await WriteCache.setString(key: "cache", value: userId!);
-    } catch (e) {
-      print(e); //Do something if error occurs
-   }
- }
- 
-//Splash view
-import 'dart:async';
-import 'package:cache_manager/cache_manager.dart';
-import 'package:flutter/material.dart';
-
-class SplashView extends StatefulWidget {
-  @override
-  _SplashViewState createState() => _SplashViewState();
-}
-
-class _SplashViewState extends State<SplashView> {
-  Future initiateCache() async {
-    return CacheManagerUtils.conditionalCache(
-        key: "cache",
-        valueType: ValueType.StringValue,
-        actionIfNull: () {
-          Navigator.of(context).pushNamed(AppRoutes.LoginRoute);
-        },
-        actionIfNotNull: () {
-          Navigator.of(context).pushNamed(AppRoutes.HomeRoute);
-        });
-  }
-
-  @override
-  void initState() {
-    Timer(Duration(seconds: 1), initiateCache);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("demo app"),
-      ),
-    );
-  }
-}
-
-//Home view
-import 'package:cache_manager/core/cache_manager_utils.dart';
-import 'package:cache_manager/core/delete_cache_service.dart';
-import 'package:flutter/material.dart';
-
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: CacheManagerUtils.cacheTextBuilder(
-            textStyle: TextStyle(color: Colors.white), cacheKey: "cache"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          DeleteCache.deleteKey(
-              "cache", Navigator.of(context).pushNamed(AppRoutes.LoginRoute));
-        },
-      ),
-    );
-  }
-}
-```
 
 #### ❤Loved the utility? [Donate here](https://www.paypal.com/paypalme/abhishvekk).
 #### 🚀Want to learn more about Flutter? [Checkout this out!](https://www.youtube.com/channel/UCIxJGxcB4pSrIvuv8FyuqUA)
 #### 💥DM me on Instagram for doubts [Follow here](https://www.instagram.com/abhishvek/)
-
-
 
 ## 🐛 Bugs/Requests
 
